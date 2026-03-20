@@ -1,0 +1,27 @@
+{
+    "$schema": "https://getcomposer.org/schema.json",
+    "name": "codprez/laravel-page-builder",
+    "description": "Predefined section-based page builder for Laravel + Inertia + React.",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "illuminate/database": "^12.0",
+        "illuminate/http": "^12.0",
+        "illuminate/support": "^12.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codprez\\PageBuilder\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codprez\\PageBuilder\\PageBuilderServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
