@@ -4,11 +4,25 @@
     "description": "Predefined section-based page builder for Laravel + Inertia + React.",
     "type": "library",
     "license": "MIT",
+    "keywords": [
+        "laravel",
+        "page-builder",
+        "inertia",
+        "react",
+        "sections",
+        "cms"
+    ],
+    "authors": [
+        {
+            "name": "Codprez",
+            "homepage": "https://github.com/obalaweb"
+        }
+    ],
     "require": {
         "php": "^8.2",
-        "illuminate/database": "^12.0",
-        "illuminate/http": "^12.0",
-        "illuminate/support": "^12.0"
+        "illuminate/database": "^10.0|^11.0|^12.0",
+        "illuminate/http": "^10.0|^11.0|^12.0",
+        "illuminate/support": "^10.0|^11.0|^12.0"
     },
     "autoload": {
         "psr-4": {
