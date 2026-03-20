@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/packagist/l/codprez/laravel-page-builder.svg?style=flat-square)](https://packagist.org/packages/codprez/laravel-page-builder)
 [![PHP Version](https://img.shields.io/packagist/php-v/codprez/laravel-page-builder.svg?style=flat-square)](https://packagist.org/packages/codprez/laravel-page-builder)
 
+![Laravel Page Builder](.github/art/banner.png)
+
 A predefined section-based page builder for Laravel + Inertia.js + React. Pages are composed of typed sections with a drag-and-drop editor, Eloquent models, API resources, per-section forms, and a section renderer.
 
 ---
