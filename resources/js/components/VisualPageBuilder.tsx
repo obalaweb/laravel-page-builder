@@ -76,13 +76,25 @@ export function VisualPageBuilder({
                     );
                 }
             } else if (event.data?.type === 'UPDATE_HEIGHT') {
-                setPreviewHeight(event.data.height);
+                const newHeight = event.data.height;
+                setPreviewHeight(current => {
+                    if (Math.abs(current - newHeight) > 5) {
+                        return newHeight;
+                    }
+                    return current;
+                });
             }
         };
 
         channel.onmessage = (event) => {
             if (event.data?.type === 'UPDATE_HEIGHT') {
-                setPreviewHeight(event.data.height);
+                const newHeight = event.data.height;
+                setPreviewHeight(current => {
+                    if (Math.abs(current - newHeight) > 5) {
+                        return newHeight;
+                    }
+                    return current;
+                });
             }
         };
 

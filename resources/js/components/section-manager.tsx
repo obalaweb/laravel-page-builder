@@ -189,6 +189,11 @@ function SortableSectionItem({
 
 export function SectionManager({ sections, onChange, metadata, previewRef }: SectionManagerProps) {
     const [activeSection, setActiveSection] = useState<string | number | null>(null);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
 
     const sensors = useSensors(
         useSensor(PointerSensor, {
@@ -200,8 +205,6 @@ export function SectionManager({ sections, onChange, metadata, previewRef }: Sec
             coordinateGetter: sortableKeyboardCoordinates,
         })
     );
-
-
 
     const addSection = (type: string) => {
         const newSection: Section = {
@@ -254,6 +257,10 @@ export function SectionManager({ sections, onChange, metadata, previewRef }: Sec
         
         onChange(newSections.map((s, i) => ({ ...s, order: i + 1 })));
     };
+
+    if (!mounted) {
+        return <div className="min-h-[100px] bg-muted/5 rounded-2xl border-2 border-dashed border-border/50 animate-pulse" />;
+    }
 
     return (
         <div className="space-y-4">
@@ -309,7 +316,6 @@ export function SectionManager({ sections, onChange, metadata, previewRef }: Sec
                             {sections.map((section, index) => (
                                 <motion.div
                                     key={section.id}
-                                    layout
                                     initial={{ opacity: 0, x: -20 }}
                                     animate={{ opacity: 1, x: 0 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
