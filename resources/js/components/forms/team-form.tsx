@@ -1,7 +1,7 @@
-import { FormInput } from '@/components/form/form-input';
-import { FormTextarea } from '@/components/form/form-textarea';
-import ImageUpload from '@/components/admin/image-upload';
-import { Button } from '@/components/ui/button';
+import { FormInput } from '../ui/form-input';
+import { FormTextarea } from '../ui/form-textarea';
+import ImageUpload from '../image-upload';
+import { Button } from '../ui/button';
 import type { TeamData, TeamItem } from '../../types/page-builder';
 import { Plus, Trash2 } from 'lucide-react';
 

@@ -1,5 +1,5 @@
-import { FormInput } from '@/components/form/form-input';
-import { FormTextarea } from '@/components/form/form-textarea';
+import { FormInput } from '../ui/form-input';
+import { FormTextarea } from '../ui/form-textarea';
 import type { ContactData } from '../../types/page-builder';
 
 interface Props {

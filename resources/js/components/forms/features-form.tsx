@@ -1,6 +1,6 @@
-import { FormInput } from '@/components/form/form-input';
-import { FormTextarea } from '@/components/form/form-textarea';
-import { Button } from '@/components/ui/button';
+import { FormInput } from '../ui/form-input';
+import { FormTextarea } from '../ui/form-textarea';
+import { Button } from '../ui/button';
 import type { FeaturesData, FeaturesItem } from '../../types/page-builder';
 import { Plus, Trash2 } from 'lucide-react';
 

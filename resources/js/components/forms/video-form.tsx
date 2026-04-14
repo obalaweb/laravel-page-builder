@@ -1,6 +1,6 @@
-import { FormInput } from '@/components/form/form-input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+import { FormInput } from '../ui/form-input';
+import { Checkbox } from '../ui/checkbox';
+import { Label } from '../ui/label';
 import type { VideoData } from '../../types/page-builder';
 
 interface Props {

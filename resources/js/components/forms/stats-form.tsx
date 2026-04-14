@@ -1,5 +1,5 @@
-import { FormInput } from '@/components/form/form-input';
-import { Button } from '@/components/ui/button';
+import { FormInput } from '../ui/form-input';
+import { Button } from '../ui/button';
 import type { StatsData, StatsItem } from '../../types/page-builder';
 import { Plus, Trash2 } from 'lucide-react';
 

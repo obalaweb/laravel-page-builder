@@ -1,5 +1,5 @@
-import { FormInput } from '@/components/form/form-input';
-import { RichTextEditor } from '@/components/form/rich-text-editor';
+import { FormInput } from '../ui/form-input';
+import { RichTextEditor } from '../rich-text-editor';
 import type { RichTextData } from '../../types/page-builder';
 
 interface Props {
