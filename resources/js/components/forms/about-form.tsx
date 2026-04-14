@@ -1,6 +1,6 @@
 import { FormInput } from '../ui/form-input';
 import { RichTextEditor } from '../rich-text-editor';
-import ImageUpload from '../image-upload';
+import ImageUpload from '@media-library/components/image-upload';
 import { FormSelect } from '../ui/form-select';
 import type { AboutData } from '../../types/page-builder';
 

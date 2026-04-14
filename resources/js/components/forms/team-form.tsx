@@ -1,6 +1,6 @@
 import { FormInput } from '../ui/form-input';
 import { FormTextarea } from '../ui/form-textarea';
-import ImageUpload from '../image-upload';
+import ImageUpload from '@media-library/components/image-upload';
 import { Button } from '../ui/button';
 import type { TeamData, TeamItem } from '../../types/page-builder';
 import { Plus, Trash2 } from 'lucide-react';

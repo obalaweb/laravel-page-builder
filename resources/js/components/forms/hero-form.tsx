@@ -1,5 +1,5 @@
 import { FormInput } from '../ui/form-input';
-import ImageUpload from '../image-upload';
+import ImageUpload from '@media-library/components/image-upload';
 import type { HeroData } from '../../types/page-builder';
 import { Label } from '../ui/label';
 import { Input } from '../ui/input';

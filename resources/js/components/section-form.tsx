@@ -1,7 +1,7 @@
 import React from 'react';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
-import ImageUpload from './image-upload';
+import ImageUpload from '@media-library/components/image-upload';
 import { Button } from './ui/button';
 import { Plus, Trash2 } from 'lucide-react';
 import { RichTextEditor } from './rich-text-editor';
