@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Panel, Group as PanelGroup, Separator as PanelResizeHandle } from 'react-resizable-panels';
 import { 
@@ -60,6 +60,48 @@ export function VisualPageBuilder({
     });
     
     const previewRef = useRef<HTMLIFrameElement>(null);
+
+    // Initial sync and BroadcastChannel setup
+    useEffect(() => {
+        const channel = new BroadcastChannel('page-builder-preview');
+        
+        const handleMessage = (event: MessageEvent) => {
+            if (event.data?.type === 'PREVIEW_READY') {
+                // Send current sections to the newly ready iframe
+                if (previewRef.current?.contentWindow) {
+                    previewRef.current.contentWindow.postMessage(
+                        { type: 'UPDATE_SECTIONS', sections: data.sections },
+                        '*'
+                    );
+                }
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+
+        // Sync to channel on start (for external tabs already open)
+        channel.postMessage({ type: 'UPDATE_SECTIONS', sections: data.sections });
+
+        return () => {
+            window.removeEventListener('message', handleMessage);
+            channel.close();
+        };
+    }, []);
+
+    // Sync sections to listeners whenever they change
+    useEffect(() => {
+        const channel = new BroadcastChannel('page-builder-preview');
+        channel.postMessage({ type: 'UPDATE_SECTIONS', sections: data.sections });
+        
+        if (previewRef.current?.contentWindow) {
+            previewRef.current.contentWindow.postMessage(
+                { type: 'UPDATE_SECTIONS', sections: data.sections },
+                '*'
+            );
+        }
+
+        return () => channel.close();
+    }, [data.sections]);
 
     const handleUpdate = (key: string, value: any) => {
         setData(prev => ({ ...prev, [key]: value }));

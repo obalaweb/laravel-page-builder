@@ -201,16 +201,7 @@ export function SectionManager({ sections, onChange, metadata, previewRef }: Sec
         })
     );
 
-    // Sync with preview iframe
-    useEffect(() => {
-        if (previewRef.current && previewRef.current.contentWindow) {
-            const sectionsCopy = JSON.parse(JSON.stringify(sections));
-            previewRef.current.contentWindow.postMessage(
-                { type: 'UPDATE_SECTIONS', sections: sectionsCopy },
-                '*'
-            );
-        }
-    }, [sections]);
+
 
     const addSection = (type: string) => {
         const newSection: Section = {
