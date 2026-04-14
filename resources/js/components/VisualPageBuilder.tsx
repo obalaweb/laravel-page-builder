@@ -283,13 +283,13 @@ export function VisualPageBuilder({
                             initial={{ opacity: 0, scale: 0.98 }}
                             animate={{ opacity: 1, scale: 1 }}
                             transition={{ delay: 0.2, duration: 0.5 }}
-                            className="bg-zinc-100/50 dark:bg-zinc-900 shadow-inner relative flex items-center justify-center p-6 md:p-12 overflow-hidden h-full"
+                            className="bg-zinc-100/50 dark:bg-zinc-900 shadow-inner relative flex items-start justify-center p-6 md:p-12 overflow-y-auto h-full"
                         >
                             <div className={cn(
-                                "transition-all duration-700 ease-in-out relative flex flex-col shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)]",
+                                "transition-all duration-700 ease-in-out relative flex flex-col shadow-[0_32px_64px_-16px_rgba(0,0,0,0.2)] dark:shadow-[0_32px_64px_-16px_rgba(0,0,0,0.5)] bg-background shrink-0",
                                 previewDevice === 'mobile' 
-                                    ? 'w-[375px] h-[760px] rounded-[3.5rem] border-[12px] border-zinc-950 bg-zinc-950 overflow-hidden' 
-                                    : 'w-full h-full rounded-2xl border border-border/50 bg-background overflow-hidden'
+                                    ? 'w-[375px] h-[760px] rounded-[3.5rem] border-[12px] border-zinc-950 bg-zinc-950 overflow-hidden my-auto' 
+                                    : 'w-full h-full rounded-2xl border border-border/50 overflow-hidden'
                             )}>
                                 {/* Desktop Browser Header */}
                                 {previewDevice === 'desktop' && (
