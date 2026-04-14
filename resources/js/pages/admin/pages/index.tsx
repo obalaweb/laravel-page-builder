@@ -1,10 +1,10 @@
 import { Head, Link, router } from '@inertiajs/react';
 import { Edit, Plus, Trash2, Home, Globe } from 'lucide-react';
 import ConfirmModal from '../../../components/confirm-modal';
-import { Button } from '../../../ui/button';
+import { Button } from '../../../components/ui/button';
 import { useConfirm } from '../../../hooks/use-confirm';
 
-import { Badge } from '../../../ui/badge';
+import { Badge } from '../../../components/ui/badge';
 
 type PageRow = {
     id: number;
