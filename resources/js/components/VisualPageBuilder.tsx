@@ -80,7 +80,6 @@ export function VisualPageBuilder({
             }
         };
 
-        const channel = new BroadcastChannel('page-builder-preview');
         channel.onmessage = (event) => {
             if (event.data?.type === 'UPDATE_HEIGHT') {
                 setPreviewHeight(event.data.height);
