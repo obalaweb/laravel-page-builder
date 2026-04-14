@@ -16,7 +16,7 @@ import {
     verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
-import { Button } from '@/components/ui/button';
+import { Button } from './ui/button';
 import { SectionPicker } from './section-picker';
 import { HeroForm } from './forms/hero-form';
 import { AboutForm } from './forms/about-form';

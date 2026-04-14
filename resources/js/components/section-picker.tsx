@@ -1,11 +1,11 @@
 import { SECTION_DEFINITIONS, type SectionType } from '../types/page-builder';
-import { Button } from '@/components/ui/button';
+import { Button } from './ui/button';
 import {
     Dialog,
     DialogContent,
     DialogHeader,
     DialogTitle,
-} from '@/components/ui/dialog';
+} from './ui/dialog';
 import {
     BarChart2,
     CircleHelp,
