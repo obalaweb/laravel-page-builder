@@ -1,6 +1,6 @@
 import { FormInput } from '../ui/form-input';
 import { FormSelect } from '../ui/form-select';
-import MediaSelector from '../media-selector';
+import MediaSelector from '@media-library/components/media-selector';
 import { Button } from '../ui/button';
 import { Checkbox } from '../ui/checkbox';
 import { Label } from '../ui/label';
