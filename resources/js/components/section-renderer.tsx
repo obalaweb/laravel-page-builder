@@ -1,5 +1,5 @@
-import { Component, type ReactNode } from 'react';
-import type { PageSection, SectionType } from '../types/page-builder';
+import { Component, type ReactNode, useEffect, useState } from 'react';
+import type { HeroData, HeroSlideItem, PageSection, SectionType } from '../types/page-builder';
 
 // ─── Error Boundary ────────────────────────────────────────────────────────────
 
@@ -21,7 +21,79 @@ class SectionErrorBoundary extends Component<{ children: ReactNode }, { hasError
 
 // ─── Section Display Components ────────────────────────────────────────────────
 
-function HeroSection({ data }: { data: import('../types/page-builder').HeroData }) {
+function HeroCarouselBlock({ data, slides }: { data: HeroData; slides: HeroSlideItem[] }) {
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+        if (slides.length <= 1) return;
+        const id = window.setInterval(() => {
+            setIndex((v) => (v + 1) % slides.length);
+        }, 6000);
+        return () => window.clearInterval(id);
+    }, [slides.length]);
+
+    const slide = slides[index]!;
+    const opacity = (data.overlay_opacity ?? 40) / 100;
+
+    return (
+        <section className="relative flex min-h-[480px] items-center justify-center overflow-hidden bg-gray-900 text-white md:min-h-[560px]">
+            {slide.image_url && (
+                <>
+                    <img src={slide.image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    <div className="absolute inset-0 bg-black" style={{ opacity }} />
+                </>
+            )}
+            <div className="relative z-10 mx-auto max-w-4xl px-6 py-20 text-center">
+                {slide.headline && <h1 className="text-4xl font-bold leading-tight md:text-5xl">{slide.headline}</h1>}
+                {slide.subheadline && <p className="mt-4 text-lg text-white/80 md:text-xl">{slide.subheadline}</p>}
+                {(slide.description ?? '').length > 0 && (
+                    <p className="mt-3 text-base text-white/75 md:text-lg">{slide.description}</p>
+                )}
+                {(data.primary_button_text || data.secondary_button_text) && (
+                    <div className="mt-8 flex flex-wrap justify-center gap-4">
+                        {data.primary_button_text && (
+                            <a
+                                href={data.primary_button_url || '#'}
+                                className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground transition hover:opacity-90"
+                            >
+                                {data.primary_button_text}
+                            </a>
+                        )}
+                        {data.secondary_button_text && (
+                            <a
+                                href={data.secondary_button_url || '#'}
+                                className="rounded-lg border border-white/50 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
+                            >
+                                {data.secondary_button_text}
+                            </a>
+                        )}
+                    </div>
+                )}
+            </div>
+            {slides.length > 1 && (
+                <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+                    {slides.map((_, i) => (
+                        <button
+                            key={i}
+                            type="button"
+                            aria-label={`Slide ${i + 1}`}
+                            onClick={() => setIndex(i)}
+                            className={`h-2 rounded-full transition-all ${index === i ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/80'}`}
+                        />
+                    ))}
+                </div>
+            )}
+        </section>
+    );
+}
+
+function HeroSection({ data }: { data: HeroData }) {
+    const slides = (data.slides ?? []).filter((s) => s.image_url);
+
+    if (slides.length > 0) {
+        return <HeroCarouselBlock data={data} slides={slides} />;
+    }
+
     return (
         <section className="relative flex min-h-[480px] items-center justify-center overflow-hidden bg-gray-900 text-white">
             {data.image_url && (
@@ -364,7 +436,7 @@ function SectionSwitch({ section }: { section: PageSection }) {
     if (!section.is_visible) return null;
 
     switch (section.type as SectionType) {
-        case 'hero': return <HeroSection data={section.data as import('../types/page-builder').HeroData} />;
+        case 'hero': return <HeroSection data={section.data as HeroData} />;
         case 'about': return <AboutSection data={section.data as import('../types/page-builder').AboutData} />;
         case 'features': return <FeaturesSection data={section.data as import('../types/page-builder').FeaturesData} />;
         case 'stats': return <StatsSection data={section.data as import('../types/page-builder').StatsData} />;

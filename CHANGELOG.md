@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.4.0] - 2026-04-26
+
+### Added
+
+- **Hero carousel slides**: optional `HeroData.slides` array (`HeroSlideItem`: image, headline, subheadline, optional description). When any slide has an image URL, `SectionRenderer` shows a rotating hero with dot navigation; otherwise the single-image hero behaviour is unchanged.
+- **Hero admin UI**: `HeroForm` supports adding/removing slides with per-slide image upload and copy fields, plus helper text for single-image vs carousel modes.
+
 ## [1.0.0] - 2024-01-01
 
 ### Added
