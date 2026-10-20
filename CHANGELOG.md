@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.1] - 2026-10-20
+
+### Fixed
+
+- **VisualPageBuilder now uses SectionEditor**: Updated VisualPageBuilder component to use the new SectionEditor component instead of the deprecated SectionManager. This fixes the issue where hero section image upload fields were not visible in the admin panel, as SectionEditor includes the dedicated HeroForm component with proper image upload support.
+
 ## [1.4.0] - 2026-04-26
 
 ### Added

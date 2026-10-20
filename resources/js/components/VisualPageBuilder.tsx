@@ -17,7 +17,7 @@ import { Label } from './ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
 import { Checkbox } from './ui/checkbox';
 import { Separator } from './ui/separator';
-import { SectionManager } from './section-manager';
+import { SectionEditor } from './section-editor';
 import { cn } from '../lib/utils';
 import { PageSection, SectionDefinition } from '../types/page-builder';
 
@@ -29,7 +29,7 @@ interface VisualPageBuilderProps {
         is_home: boolean;
         sections: PageSection[];
     };
-    sectionMetadata: {
+    sectionMetadata?: {
         types: string[];
         requiredFields: Record<string, string[]>;
     };
@@ -40,14 +40,14 @@ interface VisualPageBuilderProps {
     backUrl?: string;
 }
 
-export function VisualPageBuilder({ 
-    page, 
-    sectionMetadata, 
-    previewUrl, 
-    onSave, 
-    processing, 
-    errors = {}, 
-    backUrl = '/admin/pages' 
+export function VisualPageBuilder({
+    page,
+    sectionMetadata,
+    previewUrl,
+    onSave,
+    processing,
+    errors = {},
+    backUrl = '/admin/pages'
 }: VisualPageBuilderProps) {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [previewDevice, setPreviewDevice] = useState<'mobile' | 'desktop'>('desktop');
@@ -56,9 +56,9 @@ export function VisualPageBuilder({
         slug: page.slug,
         status: page.status,
         is_home: page.is_home,
-        sections: page.sections,
+        sections: page.sections.map((s, i) => ({ ...s, _key: s._key || `section-${i}` })),
     });
-    
+
     const [previewHeight, setPreviewHeight] = useState(800);
     const previewRef = useRef<HTMLIFrameElement>(null);
 
@@ -70,8 +70,9 @@ export function VisualPageBuilder({
             if (event.data?.type === 'PREVIEW_READY') {
                 // Send current sections to the newly ready iframe
                 if (previewRef.current?.contentWindow) {
+                    const previewSections = data.sections.map(({ _key, ...s }) => s);
                     previewRef.current.contentWindow.postMessage(
-                        { type: 'UPDATE_SECTIONS', sections: data.sections },
+                        { type: 'UPDATE_SECTIONS', sections: previewSections },
                         '*'
                     );
                 }
@@ -101,7 +102,8 @@ export function VisualPageBuilder({
         window.addEventListener('message', handleMessage);
 
         // Sync to channel on start (for external tabs already open)
-        channel.postMessage({ type: 'UPDATE_SECTIONS', sections: data.sections });
+        const previewSections = data.sections.map(({ _key, ...s }) => s);
+        channel.postMessage({ type: 'UPDATE_SECTIONS', sections: previewSections });
 
         return () => {
             window.removeEventListener('message', handleMessage);
@@ -112,11 +114,12 @@ export function VisualPageBuilder({
     // Sync sections to listeners whenever they change
     useEffect(() => {
         const channel = new BroadcastChannel('page-builder-preview');
-        channel.postMessage({ type: 'UPDATE_SECTIONS', sections: data.sections });
-        
+        const previewSections = data.sections.map(({ _key, ...s }) => s);
+        channel.postMessage({ type: 'UPDATE_SECTIONS', sections: previewSections });
+
         if (previewRef.current?.contentWindow) {
             previewRef.current.contentWindow.postMessage(
-                { type: 'UPDATE_SECTIONS', sections: data.sections },
+                { type: 'UPDATE_SECTIONS', sections: previewSections },
                 '*'
             );
         }
@@ -133,7 +136,10 @@ export function VisualPageBuilder({
         onSave(data);
     };
 
-    const isDirty = JSON.stringify(data) !== JSON.stringify({
+    const isDirty = JSON.stringify({
+        ...data,
+        sections: data.sections.map(({ _key, ...s }) => s)
+    }) !== JSON.stringify({
         title: page.title,
         slug: page.slug,
         status: page.status,
@@ -275,16 +281,14 @@ export function VisualPageBuilder({
     
                                 <Separator className="opacity-50" />
     
-                                {/* Section Manager */}
+                                {/* Section Editor */}
                                 <div className="space-y-2">
                                      <div className="flex items-center justify-between px-1">
                                         <h3 className="text-[11px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Layout Builder</h3>
                                     </div>
-                                    <SectionManager 
+                                    <SectionEditor
                                         sections={data.sections}
                                         onChange={(sections) => handleUpdate('sections', sections)}
-                                        metadata={sectionMetadata}
-                                        previewRef={previewRef}
                                     />
                                 </div>
                             </div>
