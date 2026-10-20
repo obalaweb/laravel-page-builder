@@ -1,5 +1,5 @@
-import { Component, type ReactNode } from 'react';
-import type { PageSection, SectionType } from '../types/page-builder';
+import { Component, type ReactNode, useEffect, useState } from 'react';
+import type { HeroData, HeroSlideItem, PageSection, SectionType } from '../types/page-builder';
 
 // ─── Error Boundary ────────────────────────────────────────────────────────────
 
@@ -21,7 +21,79 @@ class SectionErrorBoundary extends Component<{ children: ReactNode }, { hasError
 
 // ─── Section Display Components ────────────────────────────────────────────────
 
-function HeroSection({ data }: { data: import('@/types/page-builder').HeroData }) {
+function HeroCarouselBlock({ data, slides }: { data: HeroData; slides: HeroSlideItem[] }) {
+    const [index, setIndex] = useState(0);
+
+    useEffect(() => {
+        if (slides.length <= 1) return;
+        const id = window.setInterval(() => {
+            setIndex((v) => (v + 1) % slides.length);
+        }, 6000);
+        return () => window.clearInterval(id);
+    }, [slides.length]);
+
+    const slide = slides[index]!;
+    const opacity = (data.overlay_opacity ?? 40) / 100;
+
+    return (
+        <section className="relative flex min-h-[480px] items-center justify-center overflow-hidden bg-gray-900 text-white md:min-h-[560px]">
+            {slide.image_url && (
+                <>
+                    <img src={slide.image_url} alt="" className="absolute inset-0 h-full w-full object-cover" />
+                    <div className="absolute inset-0 bg-black" style={{ opacity }} />
+                </>
+            )}
+            <div className="relative z-10 mx-auto max-w-4xl px-6 py-20 text-center">
+                {slide.headline && <h1 className="text-4xl font-bold leading-tight md:text-5xl">{slide.headline}</h1>}
+                {slide.subheadline && <p className="mt-4 text-lg text-white/80 md:text-xl">{slide.subheadline}</p>}
+                {(slide.description ?? '').length > 0 && (
+                    <p className="mt-3 text-base text-white/75 md:text-lg">{slide.description}</p>
+                )}
+                {(data.primary_button_text || data.secondary_button_text) && (
+                    <div className="mt-8 flex flex-wrap justify-center gap-4">
+                        {data.primary_button_text && (
+                            <a
+                                href={data.primary_button_url || '#'}
+                                className="rounded-lg bg-primary px-6 py-3 font-semibold text-primary-foreground transition hover:opacity-90"
+                            >
+                                {data.primary_button_text}
+                            </a>
+                        )}
+                        {data.secondary_button_text && (
+                            <a
+                                href={data.secondary_button_url || '#'}
+                                className="rounded-lg border border-white/50 px-6 py-3 font-semibold text-white transition hover:bg-white/10"
+                            >
+                                {data.secondary_button_text}
+                            </a>
+                        )}
+                    </div>
+                )}
+            </div>
+            {slides.length > 1 && (
+                <div className="absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 gap-2">
+                    {slides.map((_, i) => (
+                        <button
+                            key={i}
+                            type="button"
+                            aria-label={`Slide ${i + 1}`}
+                            onClick={() => setIndex(i)}
+                            className={`h-2 rounded-full transition-all ${index === i ? 'w-8 bg-white' : 'w-2 bg-white/50 hover:bg-white/80'}`}
+                        />
+                    ))}
+                </div>
+            )}
+        </section>
+    );
+}
+
+function HeroSection({ data }: { data: HeroData }) {
+    const slides = (data.slides ?? []).filter((s) => s.image_url);
+
+    if (slides.length > 0) {
+        return <HeroCarouselBlock data={data} slides={slides} />;
+    }
+
     return (
         <section className="relative flex min-h-[480px] items-center justify-center overflow-hidden bg-gray-900 text-white">
             {data.image_url && (
@@ -65,7 +137,7 @@ function HeroSection({ data }: { data: import('@/types/page-builder').HeroData }
     );
 }
 
-function AboutSection({ data }: { data: import('@/types/page-builder').AboutData }) {
+function AboutSection({ data }: { data: import('../types/page-builder').AboutData }) {
     const isLeft = data.layout === 'image-left';
     return (
         <section className="mx-auto max-w-6xl px-6 py-20">
@@ -89,7 +161,7 @@ function AboutSection({ data }: { data: import('@/types/page-builder').AboutData
     );
 }
 
-function FeaturesSection({ data }: { data: import('@/types/page-builder').FeaturesData }) {
+function FeaturesSection({ data }: { data: import('../types/page-builder').FeaturesData }) {
     return (
         <section className="bg-muted/30 px-6 py-20">
             <div className="mx-auto max-w-6xl">
@@ -113,7 +185,7 @@ function FeaturesSection({ data }: { data: import('@/types/page-builder').Featur
     );
 }
 
-function StatsSection({ data }: { data: import('@/types/page-builder').StatsData }) {
+function StatsSection({ data }: { data: import('../types/page-builder').StatsData }) {
     return (
         <section className="bg-primary px-6 py-16 text-primary-foreground">
             <div className="mx-auto max-w-6xl">
@@ -134,7 +206,7 @@ function StatsSection({ data }: { data: import('@/types/page-builder').StatsData
     );
 }
 
-function TeamSection({ data }: { data: import('@/types/page-builder').TeamData }) {
+function TeamSection({ data }: { data: import('../types/page-builder').TeamData }) {
     return (
         <section className="mx-auto max-w-6xl px-6 py-20">
             <div className="text-center">
@@ -173,7 +245,7 @@ function TeamSection({ data }: { data: import('@/types/page-builder').TeamData }
     );
 }
 
-function TestimonialsSection({ data }: { data: import('@/types/page-builder').TestimonialsData }) {
+function TestimonialsSection({ data }: { data: import('../types/page-builder').TestimonialsData }) {
     return (
         <section className="bg-muted/30 px-6 py-20">
             <div className="mx-auto max-w-6xl">
@@ -203,7 +275,7 @@ function TestimonialsSection({ data }: { data: import('@/types/page-builder').Te
     );
 }
 
-function CtaSection({ data }: { data: import('@/types/page-builder').CtaData }) {
+function CtaSection({ data }: { data: import('../types/page-builder').CtaData }) {
     const bgClass =
         data.background === 'dark'
             ? 'bg-gray-900 text-white'
@@ -239,7 +311,7 @@ function CtaSection({ data }: { data: import('@/types/page-builder').CtaData }) 
     );
 }
 
-function GallerySection({ data }: { data: import('@/types/page-builder').GalleryData }) {
+function GallerySection({ data }: { data: import('../types/page-builder').GalleryData }) {
     const colClass = data.columns === 2 ? 'grid-cols-2' : data.columns === 4 ? 'grid-cols-2 lg:grid-cols-4' : 'grid-cols-2 lg:grid-cols-3';
     return (
         <section className="mx-auto max-w-6xl px-6 py-20">
@@ -253,7 +325,7 @@ function GallerySection({ data }: { data: import('@/types/page-builder').Gallery
     );
 }
 
-function FaqSection({ data }: { data: import('@/types/page-builder').FaqData }) {
+function FaqSection({ data }: { data: import('../types/page-builder').FaqData }) {
     return (
         <section className="mx-auto max-w-3xl px-6 py-20">
             <div className="text-center">
@@ -275,7 +347,7 @@ function FaqSection({ data }: { data: import('@/types/page-builder').FaqData }) 
     );
 }
 
-function ContactSection({ data }: { data: import('@/types/page-builder').ContactData }) {
+function ContactSection({ data }: { data: import('../types/page-builder').ContactData }) {
     return (
         <section className="bg-muted/30 px-6 py-20">
             <div className="mx-auto max-w-4xl">
@@ -321,7 +393,7 @@ function ContactSection({ data }: { data: import('@/types/page-builder').Contact
     );
 }
 
-function RichTextSection({ data }: { data: import('@/types/page-builder').RichTextData }) {
+function RichTextSection({ data }: { data: import('../types/page-builder').RichTextData }) {
     return (
         <section className="mx-auto max-w-3xl px-6 py-16">
             {data.title && <h2 className="mb-6 text-2xl font-bold">{data.title}</h2>}
@@ -332,7 +404,7 @@ function RichTextSection({ data }: { data: import('@/types/page-builder').RichTe
     );
 }
 
-function VideoSection({ data }: { data: import('@/types/page-builder').VideoData }) {
+function VideoSection({ data }: { data: import('../types/page-builder').VideoData }) {
     if (!data.url) return null;
 
     const embedUrl = data.url
@@ -364,18 +436,18 @@ function SectionSwitch({ section }: { section: PageSection }) {
     if (!section.is_visible) return null;
 
     switch (section.type as SectionType) {
-        case 'hero': return <HeroSection data={section.data as import('@/types/page-builder').HeroData} />;
-        case 'about': return <AboutSection data={section.data as import('@/types/page-builder').AboutData} />;
-        case 'features': return <FeaturesSection data={section.data as import('@/types/page-builder').FeaturesData} />;
-        case 'stats': return <StatsSection data={section.data as import('@/types/page-builder').StatsData} />;
-        case 'team': return <TeamSection data={section.data as import('@/types/page-builder').TeamData} />;
-        case 'testimonials': return <TestimonialsSection data={section.data as import('@/types/page-builder').TestimonialsData} />;
-        case 'cta': return <CtaSection data={section.data as import('@/types/page-builder').CtaData} />;
-        case 'gallery': return <GallerySection data={section.data as import('@/types/page-builder').GalleryData} />;
-        case 'faq': return <FaqSection data={section.data as import('@/types/page-builder').FaqData} />;
-        case 'contact': return <ContactSection data={section.data as import('@/types/page-builder').ContactData} />;
-        case 'rich_text': return <RichTextSection data={section.data as import('@/types/page-builder').RichTextData} />;
-        case 'video': return <VideoSection data={section.data as import('@/types/page-builder').VideoData} />;
+        case 'hero': return <HeroSection data={section.data as HeroData} />;
+        case 'about': return <AboutSection data={section.data as import('../types/page-builder').AboutData} />;
+        case 'features': return <FeaturesSection data={section.data as import('../types/page-builder').FeaturesData} />;
+        case 'stats': return <StatsSection data={section.data as import('../types/page-builder').StatsData} />;
+        case 'team': return <TeamSection data={section.data as import('../types/page-builder').TeamData} />;
+        case 'testimonials': return <TestimonialsSection data={section.data as import('../types/page-builder').TestimonialsData} />;
+        case 'cta': return <CtaSection data={section.data as import('../types/page-builder').CtaData} />;
+        case 'gallery': return <GallerySection data={section.data as import('../types/page-builder').GalleryData} />;
+        case 'faq': return <FaqSection data={section.data as import('../types/page-builder').FaqData} />;
+        case 'contact': return <ContactSection data={section.data as import('../types/page-builder').ContactData} />;
+        case 'rich_text': return <RichTextSection data={section.data as import('../types/page-builder').RichTextData} />;
+        case 'video': return <VideoSection data={section.data as import('../types/page-builder').VideoData} />;
         default: return null;
     }
 }

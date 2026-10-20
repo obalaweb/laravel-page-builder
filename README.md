@@ -90,6 +90,24 @@ return [
 
 The configured media model must expose `id`, `url`, and optionally `thumbnail_url` attributes. It is used by image fields in section forms and the `ImageUpload` / `MediaSelector` integration points.
 
+### Vite alias (`@media-library`)
+
+Section forms import `@media-library/components/...` (same JavaScript tree as **codprez/laravel-media-library**). If you load the package from `vendor/` with Vite, add an alias alongside `@codprez/media-library` (or in place of it), for example:
+
+```ts
+import path from 'path';
+
+export default defineConfig({
+    resolve: {
+        alias: {
+            '@codprez/page-builder': path.resolve(__dirname, 'vendor/codprez/laravel-page-builder/resources/js'),
+            '@codprez/media-library': path.resolve(__dirname, 'vendor/codprez/laravel-media-library/resources/js'),
+            '@media-library': path.resolve(__dirname, 'vendor/codprez/laravel-media-library/resources/js'),
+        },
+    },
+});
+```
+
 ---
 
 ## Usage

@@ -1,5 +1,15 @@
 // ─── Section Data Types ────────────────────────────────────────────────────────
 
+/** One slide in a homepage-style hero carousel (optional; see `HeroData.slides`). */
+export interface HeroSlideItem {
+    image_id: number | null;
+    image_url: string | null;
+    headline: string;
+    subheadline: string;
+    /** Optional extra line under the headline on the public site. */
+    description?: string;
+}
+
 export interface HeroData {
     headline: string;
     subheadline: string;
@@ -10,6 +20,11 @@ export interface HeroData {
     secondary_button_text: string;
     secondary_button_url: string;
     overlay_opacity: number;
+    /**
+     * When non-empty, the public site can render these as carousel slides (image + copy each).
+     * Leave empty to use the single background image and headline/subheadline above.
+     */
+    slides?: HeroSlideItem[];
 }
 
 export interface AboutData {
@@ -171,6 +186,7 @@ export const SECTION_DEFINITIONS: SectionDefinition[] = [
             secondary_button_text: '',
             secondary_button_url: '',
             overlay_opacity: 40,
+            slides: [],
         } satisfies HeroData,
     },
     {

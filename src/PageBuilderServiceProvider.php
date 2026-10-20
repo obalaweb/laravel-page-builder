@@ -26,6 +26,9 @@ class PageBuilderServiceProvider extends ServiceProvider
             __DIR__.'/../database/migrations/' => database_path('migrations'),
         ], 'page-builder-migrations');
 
+        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
+
         $this->registerBuiltInSections();
     }
 

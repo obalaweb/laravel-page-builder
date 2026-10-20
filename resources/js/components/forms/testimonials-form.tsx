@@ -1,7 +1,7 @@
-import { FormTextarea } from '@/components/forms/form-textarea';
-import { FormInput } from '@/components/forms/form-input';
-import ImageUpload from '@/components/admin/image-upload';
-import { Button } from '@/components/ui/button';
+import { FormTextarea } from '../ui/form-textarea';
+import { FormInput } from '../ui/form-input';
+import ImageUpload from '@media-library/components/image-upload';
+import { Button } from '../ui/button';
 import type { TestimonialsData, TestimonialItem } from '../../types/page-builder';
 import { Plus, Trash2 } from 'lucide-react';
 

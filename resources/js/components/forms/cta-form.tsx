@@ -1,6 +1,6 @@
-import { FormInput } from '@/components/forms/form-input';
-import { FormTextarea } from '@/components/forms/form-textarea';
-import { FormSelect } from '@/components/forms/form-select';
+import { FormInput } from '../ui/form-input';
+import { FormTextarea } from '../ui/form-textarea';
+import { FormSelect } from '../ui/form-select';
 import type { CtaData } from '../../types/page-builder';
 
 interface Props {

@@ -1,7 +1,7 @@
-import { FormInput } from '@/components/forms/form-input';
-import { RichTextEditor } from '@/components/forms/rich-text-editor';
-import ImageUpload from '@/components/admin/image-upload';
-import { FormSelect } from '@/components/forms/form-select';
+import { FormInput } from '../ui/form-input';
+import { RichTextEditor } from '../rich-text-editor';
+import ImageUpload from '@media-library/components/image-upload';
+import { FormSelect } from '../ui/form-select';
 import type { AboutData } from '../../types/page-builder';
 
 interface Props {
