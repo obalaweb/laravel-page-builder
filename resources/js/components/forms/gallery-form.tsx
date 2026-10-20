@@ -1,9 +1,9 @@
-import { FormInput } from '@/components/form/form-input';
-import { FormSelect } from '@/components/form/form-select';
+import { FormInput } from '@/components/forms/form-input';
+import { FormSelect } from '@/components/forms/form-select';
 import MediaSelector from '@/components/admin/media-selector';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/components/forms/label';
 import type { GalleryData } from '../../types/page-builder';
 import { X } from 'lucide-react';
 import { useState } from 'react';

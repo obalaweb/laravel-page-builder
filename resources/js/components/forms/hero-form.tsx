@@ -1,7 +1,7 @@
-import { FormInput } from '@/components/form/form-input';
+import { FormInput } from '@/components/forms/form-input';
 import ImageUpload from '@/components/admin/image-upload';
 import type { HeroData } from '../../types/page-builder';
-import { Label } from '@/components/ui/label';
+import { Label } from '@/components/forms/label';
 import { Input } from '@/components/ui/input';
 
 interface Props {

@@ -1,5 +1,5 @@
-import { FormTextarea } from '@/components/form/form-textarea';
-import { FormInput } from '@/components/form/form-input';
+import { FormTextarea } from '@/components/forms/form-textarea';
+import { FormInput } from '@/components/forms/form-input';
 import ImageUpload from '@/components/admin/image-upload';
 import { Button } from '@/components/ui/button';
 import type { TestimonialsData, TestimonialItem } from '../../types/page-builder';

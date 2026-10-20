@@ -1,4 +1,4 @@
-import { FormInput } from '@/components/form/form-input';
+import { FormInput } from '@/components/forms/form-input';
 import { Button } from '@/components/ui/button';
 import type { StatsData, StatsItem } from '../../types/page-builder';
 import { Plus, Trash2 } from 'lucide-react';

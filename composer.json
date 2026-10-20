@@ -4,6 +4,7 @@
     "description": "Predefined section-based page builder for Laravel + Inertia + React.",
     "type": "library",
     "license": "MIT",
+    "version": "0.2.0",
     "keywords": [
         "laravel",
         "page-builder",
